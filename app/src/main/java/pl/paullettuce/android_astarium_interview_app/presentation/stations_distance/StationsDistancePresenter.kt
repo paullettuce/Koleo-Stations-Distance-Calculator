@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import pl.paullettuce.android_astarium_interview_app.domain.extensions.logd
+import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
 import pl.paullettuce.android_astarium_interview_app.domain.result.ParsedError
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.GetStationsUseCase
@@ -47,8 +47,8 @@ class StationsDistancePresenter
 
     private fun handleError(parsedError: ParsedError) {
         when (parsedError) {
-            is ParsedError.UnknownException -> logd("Unknown exception: ${parsedError.throwable}")
-            is ParsedError.UnknownHttpCode -> logd("Unhandled error code: ${parsedError.httpErrorCode}")
+            is ParsedError.UnknownException -> loge(parsedError.throwable)
+            is ParsedError.UnknownHttpCode -> loge("Unhandled error code: ${parsedError.httpErrorCode}")
             ParsedError.MissingHeader -> view.showErrorMessage("Request is missing header")
             ParsedError.NoConnection -> view.showNoConnectionError()
         }

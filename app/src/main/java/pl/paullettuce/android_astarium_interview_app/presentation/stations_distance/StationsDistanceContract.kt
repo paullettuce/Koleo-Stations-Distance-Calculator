@@ -16,4 +16,8 @@ interface StationsDistanceContract {
         fun initialize()
         fun dispose()
     }
+
+    interface StationInfoListInteractor {
+        fun onStationInfoListItemClick(item: StationInfo)
+    }
 }

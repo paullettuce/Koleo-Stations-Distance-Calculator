@@ -2,6 +2,7 @@
   <dictionary name="LETTUCE">
     <words>
       <w>autofill</w>
+      <w>interactor</w>
     </words>
   </dictionary>
 </component>

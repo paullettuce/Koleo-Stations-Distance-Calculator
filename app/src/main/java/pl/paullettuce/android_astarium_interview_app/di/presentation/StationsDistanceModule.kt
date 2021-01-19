@@ -8,6 +8,7 @@ import dagger.hilt.android.components.ActivityComponent
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistanceActivity
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistanceContract
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistancePresenter
+import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.StationInfoListAdapter
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -27,4 +28,14 @@ object StationsDistanceModule {
     fun provideStationsDistancePresenter(
         presenter: StationsDistancePresenter
     ): StationsDistanceContract.Presenter = presenter
+
+    @Provides
+    fun provideStationInfoListInteractor(
+        activity: StationsDistanceActivity
+    ): StationsDistanceContract.StationInfoListInteractor = activity
+
+    @Provides
+    fun provideStationsAdapter(
+        interactor: StationsDistanceContract.StationInfoListInteractor
+    ): StationInfoListAdapter = StationInfoListAdapter(interactor)
 }

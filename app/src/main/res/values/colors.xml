@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="textColor">#2B2B2B</color>
+    <color name="textColor75a">#BF2B2B2B</color>
+
+    <color name="list_item_stations_info_background">#F1F1F1</color>
+    <color name="separator">#1A000000</color>
 </resources>

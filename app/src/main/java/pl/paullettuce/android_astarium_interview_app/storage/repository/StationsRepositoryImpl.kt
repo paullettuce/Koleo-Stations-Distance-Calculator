@@ -7,7 +7,6 @@ import pl.paullettuce.android_astarium_interview_app.domain.extensions.logd
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
 import pl.paullettuce.android_astarium_interview_app.domain.result.ErrorParser
-import pl.paullettuce.android_astarium_interview_app.domain.result.ParsedError
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.storage.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.storage.network.ApiService
@@ -19,7 +18,7 @@ class StationsRepositoryImpl(
         return apiService.getStations()
             .doOnSubscribe { Flowable.just(ResultWrapper.loading()) }
             .map {
-                logd("Stations downloaded successfully.\n")
+                logd("Stations downloaded successfully.\n", it)
                 ResultWrapper.success(it)
             }
             .onErrorReturn {
