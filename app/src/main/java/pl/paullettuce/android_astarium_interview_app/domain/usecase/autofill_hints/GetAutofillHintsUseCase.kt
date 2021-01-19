@@ -1,4 +1,4 @@
-package pl.paullettuce.android_astarium_interview_app.domain.usecase
+package pl.paullettuce.android_astarium_interview_app.domain.usecase.autofill_hints
 
 import io.reactivex.rxjava3.core.Single
 import pl.paullettuce.android_astarium_interview_app.storage.model.AutofillHint

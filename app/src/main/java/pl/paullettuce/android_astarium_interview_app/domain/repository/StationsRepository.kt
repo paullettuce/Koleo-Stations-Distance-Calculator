@@ -1,8 +1,9 @@
 package pl.paullettuce.android_astarium_interview_app.domain.repository
 
-import androidx.lifecycle.LiveData
+import io.reactivex.rxjava3.core.Flowable
+import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.storage.model.StationInfo
 
 interface StationsRepository {
-    fun getStations(): LiveData<List<StationInfo>>
+    fun getStations(): Flowable<ResultWrapper<List<StationInfo>>>
 }
