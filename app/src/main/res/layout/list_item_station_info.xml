@@ -32,8 +32,7 @@
         android:paddingEnd="@dimen/big_padding"
         android:textAlignment="gravity"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold"
+        android:textSize="@dimen/text_size_mediumbig"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/initials"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,10 +44,9 @@
         android:layout_marginStart="@dimen/medium_padding"
         android:layout_marginEnd="@dimen/medium_padding"
         android:background="@color/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/initials"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/initials" />
 
     <TextView
         android:id="@+id/subtitle"
@@ -62,7 +60,7 @@
         android:paddingEnd="@dimen/big_padding"
         android:textAlignment="gravity"
         android:textColor="@color/text_color_opaq_75"
-        android:textSize="@dimen/text_size_mediumsmall"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/initials"
         app:layout_constraintTop_toBottomOf="@id/separator" />
