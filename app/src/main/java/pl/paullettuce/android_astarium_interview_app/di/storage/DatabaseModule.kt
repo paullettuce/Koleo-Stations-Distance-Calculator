@@ -1,6 +1,7 @@
 package pl.paullettuce.android_astarium_interview_app.di.storage
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -18,16 +19,13 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providePreferences(): Preferences {
-        return object : Preferences {
-            override fun lastSynchronizationTimestamp(): Long {
-                TODO("Not yet implemented")
-            }
-
-            override fun saveSynchronizationTimestamp(timestamp: Long) {
-                TODO("Not yet implemented")
-            }
-        }
+    fun providePreferences(
+        @ApplicationContext appContext: Context
+    ): SharedPreferences {
+        return appContext.getSharedPreferences(
+            "stations_distance_app_shared_prefs",
+            Context.MODE_PRIVATE
+        )
     }
 
     @Provides

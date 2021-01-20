@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
+import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.*
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCaseImpl
@@ -32,10 +33,10 @@ object UseCasesModule {
 
     @Provides
     fun provideSynchronizeStationsUseCaseImpl(
-        preferences: Preferences,
+        synchronizationRepository: SynchronizationInfoRepository,
         downloadStationsUseCase: DownloadStationsUseCase,
         saveStationsUseCase: SaveStationsUseCase
     ): SynchronizeStationsUseCase = SynchronizeStationsUseCaseImpl(
-        preferences, downloadStationsUseCase, saveStationsUseCase
+        synchronizationRepository, downloadStationsUseCase, saveStationsUseCase
     )
 }

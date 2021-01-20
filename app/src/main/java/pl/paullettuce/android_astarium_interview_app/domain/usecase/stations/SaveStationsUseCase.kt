@@ -16,6 +16,6 @@ class SaveStationsUseCaseImpl(
     override fun invoke(stations: List<StationDataEntity>): Flowable<ResultWrapper<Boolean>> {
         return stationsRepository.saveStations(stations)
             .andThen(Flowable.just(ResultWrapper.success(true)))
-            .onErrorReturn { ResultWrapper.failure(ParsedError.ErrorSavingDataToDb) }
+            .onErrorReturn { ResultWrapper.failure(ParsedError.ErrorSavingDataToDb(it)) }
     }
 }

@@ -54,9 +54,9 @@ class StationsDistancePresenter
         when (parsedError) {
             is ParsedError.UnknownException -> loge(parsedError.throwable)
             is ParsedError.UnknownHttpCode -> loge("Unhandled error code: ${parsedError.httpErrorCode}")
-            ParsedError.MissingHeader -> view.showMessage("Request is missing header")
+            is ParsedError.ErrorSavingDataToDb -> loge("There have been some trouble saving data.\n${parsedError.throwable}")
+            ParsedError.MissingHeader -> loge("Request is missing header")
             ParsedError.NoConnection -> view.showNoConnectionError()
-            ParsedError.ErrorSavingDataToDb -> view.showMessage("There have been some trouble saving data")
         }
     }
 }

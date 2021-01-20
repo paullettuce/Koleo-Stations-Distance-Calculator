@@ -7,9 +7,9 @@ import java.net.UnknownHostException
 sealed class ParsedError {
     class UnknownException(val throwable: Throwable): ParsedError()
     class UnknownHttpCode(val httpErrorCode: Int): ParsedError()
+    class ErrorSavingDataToDb(val throwable: Throwable): ParsedError()
     object MissingHeader: ParsedError()
     object NoConnection: ParsedError()
-    object ErrorSavingDataToDb: ParsedError()
 }
 
 object ErrorParser {
