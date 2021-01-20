@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android-astarium-interview-app</string>
+    <string name="station_list_synchronized">Lista stacji zaktualizowana</string>
 </resources>

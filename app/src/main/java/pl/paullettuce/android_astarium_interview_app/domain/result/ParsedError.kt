@@ -9,6 +9,7 @@ sealed class ParsedError {
     class UnknownHttpCode(val httpErrorCode: Int): ParsedError()
     object MissingHeader: ParsedError()
     object NoConnection: ParsedError()
+    object ErrorSavingDataToDb: ParsedError()
 }
 
 object ErrorParser {

@@ -1,12 +1,11 @@
 package pl.paullettuce.android_astarium_interview_app.domain.usecase.stations
 
-import io.reactivex.rxjava3.core.Flowable
+import androidx.lifecycle.LiveData
+import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
-import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
-import pl.paullettuce.android_astarium_interview_app.storage.model.StationInfo
 
 interface GetStationsUseCase {
-    operator fun invoke(): Flowable<ResultWrapper<List<StationInfo>>>
+    operator fun invoke(): LiveData<List<StationInfo>>
 }
 
 class GetStationsUseCaseImpl(

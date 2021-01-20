@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_station_info.view.*
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.inflate
+import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistanceContract
-import pl.paullettuce.android_astarium_interview_app.storage.model.StationInfo
 
 class StationInfoListAdapter(
     private val interactor: StationsDistanceContract.StationInfoListInteractor
@@ -36,10 +36,9 @@ class StationInfoViewHolder(
     private val interactor: StationsDistanceContract.StationInfoListInteractor
 ) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: StationInfo) {
-        val subtitle = "${item.region}, ${item.country}"
         itemView.title.text = item.name
-        itemView.subtitle.text = subtitle
-        itemView.initials.text = item.name[0] + ""
+        itemView.subtitle.text = item.regionInfo
+        itemView.initials.text = item.initials
         itemView.setOnClickListener { interactor.onStationInfoListItemClick(item) }
     }
 }
