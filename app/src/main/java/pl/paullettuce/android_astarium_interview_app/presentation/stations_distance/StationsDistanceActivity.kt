@@ -1,12 +1,16 @@
 package pl.paullettuce.android_astarium_interview_app.presentation.stations_distance
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.distance_bottom_sheet.*
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.RecyclerViewMargin
@@ -23,10 +27,14 @@ class StationsDistanceActivity : AppCompatActivity(),
     @Inject
     lateinit var stationInfoListAdapter: StationInfoListAdapter
 
+    lateinit var bottomSheet: BottomSheet
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bottomSheet = BottomSheet(distanceBottomSheet)
         setupRecyclerView()
+        setListeners()
         observeForData()
 
         presenter.initialize()
@@ -58,6 +66,12 @@ class StationsDistanceActivity : AppCompatActivity(),
         })
     }
 
+    private fun setListeners() {
+        openDistanceSheetFAB.setOnClickListener {
+            bottomSheet.toggle()
+        }
+    }
+
     private fun setupRecyclerView() {
         stationsInfoRecView.layoutManager = LinearLayoutManager(this)
         stationsInfoRecView.adapter = stationInfoListAdapter
@@ -65,4 +79,30 @@ class StationsDistanceActivity : AppCompatActivity(),
             RecyclerViewMargin(verticalMarginDp = R.dimen.recycler_view_item_margin)
         )
     }
+}
+
+class BottomSheet(view: View) {
+    val behavior = BottomSheetBehavior.from(view)
+
+    init {
+        behavior.isDraggable = false
+        hide()
+    }
+
+    fun toggle() {
+        if (isHidden()) open()
+        else hide()
+    }
+
+    fun open() {
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    fun hide() {
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    private fun isHidden() = behavior.state == BottomSheetBehavior.STATE_HIDDEN
+    private fun isOpened() = behavior.state == BottomSheetBehavior.STATE_EXPANDED
+
 }

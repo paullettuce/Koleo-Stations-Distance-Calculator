@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/distanceBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    app:behavior_hideable="true"
+    android:padding="@dimen/big_padding"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/station1Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:elevation="4dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/medium_padding"
+        android:paddingEnd="@dimen/medium_padding"
+        android:text="4430f3u3948fj349439"
+        android:textAlignment="gravity"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_mediumbig"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/station2Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:elevation="4dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/medium_padding"
+        android:paddingEnd="@dimen/medium_padding"
+        android:layout_marginTop="10dp"
+        android:text="4430f3u3948fj349439"
+        android:textAlignment="gravity"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_mediumbig"
+        app:layout_constraintTop_toBottomOf="@id/station1Name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

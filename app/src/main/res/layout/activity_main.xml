@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".presentation.stations_distance.StationsDistanceActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stationsInfoRecView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    <include layout="@layout/content_main" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/distance_bottom_sheet" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/openDistanceSheetFAB"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:src="@drawable/ic_distance"
+        android:layout_gravity="bottom|end"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
