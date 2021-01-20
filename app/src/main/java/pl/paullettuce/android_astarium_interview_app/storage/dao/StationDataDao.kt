@@ -11,7 +11,7 @@ import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataE
 @Dao
 interface StationDataDao {
 
-    @Query("SELECT * FROM station_data_entity")
+    @Query("SELECT * FROM station_data_entity ORDER BY hits DESC")
     fun getStationsData(): LiveData<List<StationDataEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
