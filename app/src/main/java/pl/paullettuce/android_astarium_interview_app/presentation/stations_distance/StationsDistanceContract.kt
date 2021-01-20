@@ -8,6 +8,11 @@ import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataE
 interface StationsDistanceContract {
 
     interface View {
+        fun noStationsSelected()
+        fun oneStationSelected(stationInfo: StationInfo)
+        fun twoStationsSelected(station1: StationInfo, station2: StationInfo)
+        fun showDistance(distanceValue: Int)
+
         fun showLoading()
         fun showNoConnectionError()
         fun showMessage(message: String)
@@ -18,6 +23,7 @@ interface StationsDistanceContract {
         fun initialize()
         fun dispose()
         fun stationsInfoObservableData(): LiveData<List<StationInfo>>
+        fun onStationInfoListItemClick(item: StationInfo)
     }
 
     interface StationInfoListInteractor {

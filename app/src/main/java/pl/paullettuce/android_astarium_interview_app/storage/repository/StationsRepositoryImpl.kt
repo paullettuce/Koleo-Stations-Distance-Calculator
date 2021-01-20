@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.logd
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
@@ -28,6 +29,12 @@ class StationsRepositoryImpl(
             .mapNotNull {
                 stationInfoListMapper.map(it)
             }
+    }
+
+    override fun getStation(id: Long): Single<StationDataEntity> {
+        return stationDataDao.getStation(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun downloadStations(): Flowable<ResultWrapper<List<StationDataEntity>>> {

@@ -5,8 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import pl.paullettuce.android_astarium_interview_app.R
-import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.BottomSheet
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistanceActivity
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistanceContract
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.StationsDistancePresenter

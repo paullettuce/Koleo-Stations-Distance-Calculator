@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.*
@@ -39,4 +40,10 @@ object UseCasesModule {
     ): SynchronizeStationsUseCase = SynchronizeStationsUseCaseImpl(
         synchronizationRepository, downloadStationsUseCase, saveStationsUseCase
     )
+
+    @Provides
+    fun provideCalculateDistanceUseCase(
+        repository: StationsRepository,
+        mapper: StationEntityToPointFMapper
+    ): CalculateDistanceUseCase = CalculateDistanceUseCaseImpl(repository, mapper)
 }

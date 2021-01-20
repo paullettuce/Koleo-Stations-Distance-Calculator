@@ -1,18 +1,21 @@
 package pl.paullettuce.android_astarium_interview_app.presentation.stations_distance
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.distance_bottom_sheet.*
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
+import pl.paullettuce.android_astarium_interview_app.presentation.bottom_sheet.BottomSheet
+import pl.paullettuce.android_astarium_interview_app.presentation.bottom_sheet.DistanceBottomSheet
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.RecyclerViewMargin
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.StationInfoListAdapter
 import javax.inject.Inject
@@ -27,12 +30,13 @@ class StationsDistanceActivity : AppCompatActivity(),
     @Inject
     lateinit var stationInfoListAdapter: StationInfoListAdapter
 
-    lateinit var bottomSheet: BottomSheet
+    lateinit var bottomSheet: DistanceBottomSheet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        bottomSheet = BottomSheet(distanceBottomSheet)
+
+        bottomSheet = DistanceBottomSheet(distanceBottomSheet)
         setupRecyclerView()
         setListeners()
         observeForData()
@@ -40,8 +44,23 @@ class StationsDistanceActivity : AppCompatActivity(),
         presenter.initialize()
     }
 
-    override fun onStationInfoListItemClick(item: StationInfo) {
-        TODO("Not yet implemented")
+    override fun onStationInfoListItemClick(item: StationInfo) =
+        presenter.onStationInfoListItemClick(item)
+
+    override fun noStationsSelected() {
+        bottomSheet.noStationsSelected()
+    }
+
+    override fun oneStationSelected(stationInfo: StationInfo) {
+        bottomSheet.oneStationSelected(stationInfo)
+    }
+
+    override fun twoStationsSelected(station1: StationInfo, station2: StationInfo) {
+        bottomSheet.twoStationsSelected(station1, station2)
+    }
+
+    override fun showDistance(distanceValue: Int) {
+        bottomSheet.showDistance(distanceValue)
     }
 
     override fun showLoading() {
@@ -79,30 +98,4 @@ class StationsDistanceActivity : AppCompatActivity(),
             RecyclerViewMargin(verticalMarginDp = R.dimen.recycler_view_item_margin)
         )
     }
-}
-
-class BottomSheet(view: View) {
-    val behavior = BottomSheetBehavior.from(view)
-
-    init {
-        behavior.isDraggable = false
-        hide()
-    }
-
-    fun toggle() {
-        if (isHidden()) open()
-        else hide()
-    }
-
-    fun open() {
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    fun hide() {
-        behavior.state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
-    private fun isHidden() = behavior.state == BottomSheetBehavior.STATE_HIDDEN
-    private fun isOpened() = behavior.state == BottomSheetBehavior.STATE_EXPANDED
-
 }

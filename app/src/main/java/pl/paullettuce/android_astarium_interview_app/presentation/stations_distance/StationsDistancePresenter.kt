@@ -9,6 +9,7 @@ import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.domain.result.ParsedError
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
+import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.CalculateDistanceUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.GetStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCase
 import javax.inject.Inject
@@ -17,9 +18,12 @@ class StationsDistancePresenter
 @Inject constructor(
     private val view: StationsDistanceContract.View,
     private val getStationsUseCase: GetStationsUseCase,
-    private val synchronizeStationsUseCase: SynchronizeStationsUseCase
-) : StationsDistanceContract.Presenter {
+    private val synchronizeStationsUseCase: SynchronizeStationsUseCase,
+    private val calculateDistanceUseCase: CalculateDistanceUseCase
+) : StationsDistanceContract.Presenter, StateControl {
     private val compositeDisposable = CompositeDisposable()
+
+    private var stationsPickingState: StationsPickingState = NoStationSelected()
 
     override fun initialize() {
         fetchStations()
@@ -31,6 +35,28 @@ class StationsDistancePresenter
 
     override fun stationsInfoObservableData(): LiveData<List<StationInfo>> {
         return getStationsUseCase()
+    }
+
+    override fun onStationInfoListItemClick(item: StationInfo) {
+        stationsPickingState.onStationInfoClick(item, this)
+    }
+
+    override fun changeStateTo(newState: StationsPickingState) {
+        stationsPickingState = newState
+        when (newState) {
+            is NoStationSelected -> {
+                view.noStationsSelected()
+            }
+            is OneStationSelected -> {
+                view.oneStationSelected(newState.selectedStation)
+            }
+            is TwoStationsSelected -> {
+                view.twoStationsSelected(newState.station1, newState.station2)
+                calculateDistanceUseCase(newState.station1, newState.station2)
+                    .subscribeBy { view.showDistance(it) }
+                    .addTo(compositeDisposable)
+            }
+        }
     }
 
     private fun fetchStations() {

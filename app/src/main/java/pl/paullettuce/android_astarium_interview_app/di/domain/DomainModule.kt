@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoListMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
@@ -22,4 +23,7 @@ object DomainModule {
     fun provideStationEntityToStationInfoListMapper(
         itemMapper: StationEntityToStationInfoMapper
     ) = StationEntityToStationInfoListMapper(itemMapper)
+
+    @Provides
+    fun provideStationEntityToPointF() = StationEntityToPointFMapper()
 }

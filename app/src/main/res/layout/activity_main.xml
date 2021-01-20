@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clipToPadding="false"
     tools:context=".presentation.stations_distance.StationsDistanceActivity">
 
     <include layout="@layout/content_main" />
@@ -15,10 +16,11 @@
         android:id="@+id/openDistanceSheetFAB"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
+        app:elevation="16dp"
         android:layout_marginBottom="@dimen/fab_margin"
         android:src="@drawable/ic_distance"
-        android:layout_gravity="bottom|end"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

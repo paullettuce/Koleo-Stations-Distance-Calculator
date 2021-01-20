@@ -7,6 +7,8 @@
     android:clipToPadding="false"
     app:behavior_hideable="true"
     android:padding="@dimen/big_padding"
+    android:elevation="8dp"
+    android:background="@color/ultra_light_grey"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
@@ -18,9 +20,7 @@
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:maxLines="1"
-        android:paddingStart="@dimen/medium_padding"
-        android:paddingEnd="@dimen/medium_padding"
-        android:text="4430f3u3948fj349439"
+        android:padding="@dimen/big_padding"
         android:textAlignment="gravity"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_mediumbig"
@@ -35,13 +35,41 @@
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:maxLines="1"
-        android:paddingStart="@dimen/medium_padding"
-        android:paddingEnd="@dimen/medium_padding"
+        android:padding="@dimen/big_padding"
         android:layout_marginTop="10dp"
-        android:text="4430f3u3948fj349439"
         android:textAlignment="gravity"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_mediumbig"
         app:layout_constraintTop_toBottomOf="@id/station1Name" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:padding="@dimen/medium_padding"
+        android:layout_marginTop="10dp"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintTop_toBottomOf="@id/station2Name" />
+
+    <TextView
+        android:id="@+id/delete2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/station2Name"
+        app:layout_constraintTop_toTopOf="@id/station2Name"
+        app:layout_constraintBottom_toBottomOf="@id/station2Name"
+        android:text="X"
+        android:textSize="32sp"
+        android:elevation="4dp"
+        android:textColor="@color/white"
+        android:alpha="0.5"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
