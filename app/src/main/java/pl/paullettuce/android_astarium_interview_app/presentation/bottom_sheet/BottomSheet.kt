@@ -24,6 +24,6 @@ class BottomSheet(view: View, draggable: Boolean = false) {
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
-    private fun isHidden() = behavior.state == BottomSheetBehavior.STATE_HIDDEN
-    private fun isOpened() = behavior.state == BottomSheetBehavior.STATE_EXPANDED
+    fun isHidden() = behavior.state == BottomSheetBehavior.STATE_HIDDEN
+    fun isOpened() = behavior.state == BottomSheetBehavior.STATE_EXPANDED
 }

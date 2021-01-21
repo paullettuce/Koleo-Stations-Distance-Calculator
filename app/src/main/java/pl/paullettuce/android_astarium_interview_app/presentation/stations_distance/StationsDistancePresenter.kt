@@ -20,10 +20,8 @@ class StationsDistancePresenter
     private val getStationsUseCase: GetStationsUseCase,
     private val synchronizeStationsUseCase: SynchronizeStationsUseCase,
     private val calculateDistanceUseCase: CalculateDistanceUseCase
-) : StationsDistanceContract.Presenter, StateControl {
+) : StationsDistanceContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
-
-    private var stationsPickingState: StationsPickingState = NoStationSelected()
 
     override fun initialize() {
         fetchStations()
@@ -37,26 +35,10 @@ class StationsDistancePresenter
         return getStationsUseCase()
     }
 
-    override fun onStationInfoListItemClick(item: StationInfo) {
-        stationsPickingState.onStationInfoClick(item, this)
-    }
-
-    override fun changeStateTo(newState: StationsPickingState) {
-        stationsPickingState = newState
-        when (newState) {
-            is NoStationSelected -> {
-                view.noStationsSelected()
-            }
-            is OneStationSelected -> {
-                view.oneStationSelected(newState.selectedStation)
-            }
-            is TwoStationsSelected -> {
-                view.twoStationsSelected(newState.station1, newState.station2)
-                calculateDistanceUseCase(newState.station1, newState.station2)
+    override fun calculateDistance(item1: StationInfo, item2: StationInfo) {
+        calculateDistanceUseCase(item1, item2)
                     .subscribeBy { view.showDistance(it) }
                     .addTo(compositeDisposable)
-            }
-        }
     }
 
     private fun fetchStations() {

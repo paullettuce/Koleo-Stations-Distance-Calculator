@@ -14,12 +14,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openDistanceSheetFAB"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_margin="@dimen/fab_margin"
         app:elevation="16dp"
-        android:layout_marginBottom="@dimen/fab_margin"
+        app:layout_anchorGravity="top|end"
+        app:layout_anchor="@id/distanceBottomSheetView"
         android:src="@drawable/ic_distance"
         app:tint="@color/white" />
 

@@ -11,7 +11,7 @@ object DistanceCalculator {
     /**
      * Calculate distance between two points using Haversine formula
      */
-    fun getDistance(p1: PointF, p2: PointF): Double {
+    fun betweenPoints(p1: PointF, p2: PointF): Double {
         val earthRadius = 6378137 // Earth’s mean radius in meter
         val dLat = radians(p2.x - p1.x)
         val dLong = radians(p2.y - p1.y)

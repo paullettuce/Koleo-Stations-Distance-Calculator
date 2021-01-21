@@ -2,45 +2,97 @@ package pl.paullettuce.android_astarium_interview_app.presentation.stations_dist
 
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 
-interface StateControl {
-    fun changeStateTo(newState: StationsPickingState)
+interface DeleteFromBottomSheetListener {
+    fun deleteItemFromBottomSheet(item: StationInfo)
+    fun deleteAllItemsFromBottomSheet()
 }
 
-interface StationsPickingState {
-    fun onStationInfoClick(item: StationInfo,
-                           stateControl: StateControl)
-}
+abstract class StationsPickingState(
+    private val view: StationsDistanceContract.View
+) : DeleteFromBottomSheetListener {
+    abstract fun onStationInfoClick(item: StationInfo)
 
-class NoStationSelected(
-) : StationsPickingState {
-    override fun onStationInfoClick(item: StationInfo, stateControl: StateControl) {
-        stateControl.changeStateTo(OneStationSelected(item))
+    protected fun noStationsSelected() {
+        view.setStationsPickingState(NoStationSelected(view))
+    }
+
+    protected fun oneStationSelected(item: StationInfo) {
+        view.setStationsPickingState(OneStationSelected(item, view))
+    }
+
+    protected fun twoStationsSelected(item1: StationInfo, item2: StationInfo) {
+        view.setStationsPickingState(TwoStationsSelected(item1, item2, view))
     }
 }
 
+class NoStationSelected(
+    view: StationsDistanceContract.View
+) : StationsPickingState(view) {
+    init {
+        view.noStationsSelected()
+    }
+
+    override fun onStationInfoClick(item: StationInfo) {
+        oneStationSelected(item)
+    }
+
+    override fun deleteItemFromBottomSheet(item: StationInfo) { }
+    override fun deleteAllItemsFromBottomSheet() { }
+}
+
 class OneStationSelected(
-    val selectedStation: StationInfo
-) : StationsPickingState {
-    override fun onStationInfoClick(item: StationInfo, stateControl: StateControl) {
+    private val selectedStation: StationInfo,
+    view: StationsDistanceContract.View
+) : StationsPickingState(view) {
+    init {
+        view.oneStationSelected(selectedStation)
+    }
+
+    override fun onStationInfoClick(item: StationInfo) {
         if (selectedStation == item) {
-            stateControl.changeStateTo(NoStationSelected())
+            noStationsSelected()
         } else {
-            stateControl.changeStateTo(TwoStationsSelected(selectedStation, item))
+            twoStationsSelected(selectedStation, item)
         }
+    }
+
+    override fun deleteItemFromBottomSheet(item: StationInfo) {
+        noStationsSelected()
+    }
+
+    override fun deleteAllItemsFromBottomSheet() {
+        noStationsSelected()
     }
 }
 
 class TwoStationsSelected(
-    val station1: StationInfo,
-    val station2: StationInfo
-) : StationsPickingState {
-    override fun onStationInfoClick(item: StationInfo, stateControl: StateControl) {
+    private val station1: StationInfo,
+    private val station2: StationInfo,
+    view: StationsDistanceContract.View
+) : StationsPickingState(view) {
+    init {
+        view.twoStationsSelected(station1, station2)
+    }
+
+    override fun onStationInfoClick(item: StationInfo) {
+        unselectStation(item)
+    }
+
+    override fun deleteItemFromBottomSheet(item: StationInfo) {
+        unselectStation(item)
+    }
+
+    override fun deleteAllItemsFromBottomSheet() {
+        noStationsSelected()
+    }
+
+    private fun unselectStation(item: StationInfo) {
         when (item) {
             station1 -> {
-                stateControl.changeStateTo(OneStationSelected(station2))
+                oneStationSelected(station2)
             }
             station2 -> {
-                stateControl.changeStateTo(OneStationSelected(station1))
+                oneStationSelected(station1)
             }
         }
     }

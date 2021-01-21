@@ -22,7 +22,7 @@ class CalculateDistanceUseCaseImpl(
             stationsRepository.getStation(station2.id).map { mapper.map(it) },
             BiFunction<PointF, PointF, Pair<PointF, PointF>> { t1, t2 -> Pair(t1, t2) }
         ).flatMap {
-            Single.just(DistanceCalculator.getDistance(it.first, it.second).toInt())
+            Single.just(DistanceCalculator.betweenPoints(it.first, it.second).toInt())
         }
     }
 }
