@@ -3,7 +3,9 @@ package pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
+import pl.paullettuce.android_astarium_interview_app.domain.result.ErrorParser
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.DownloadStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.SaveStationsUseCase
@@ -27,19 +29,13 @@ class SynchronizeStationsUseCaseImpl(
 
         return downloadStationsUseCase()
             .flatMap {
-                when {
-                    it.isSuccess() -> {
-                        saveStationsUseCase((it as ResultWrapper.Success).data)
-                    }
-                    it.isFailure() -> {
-                        Flowable.just(it as ResultWrapper.Failure)
-                    }
-                    else -> {
-                        Flowable.just(ResultWrapper.loading())
-                    }
-                }
+                saveStationsUseCase(it)
+                    .doOnNext { synchronizationRepository.saveSynchronizationTimestampNow() }
             }
-            .doOnNext { synchronizationRepository.saveSynchronizationTimestampNow() }
+            .onErrorReturn {
+                loge(it)
+                ResultWrapper.failure(ErrorParser.parseError(it))
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

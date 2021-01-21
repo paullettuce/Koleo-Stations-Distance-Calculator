@@ -37,24 +37,30 @@ class StationsDistancePresenter
 
     override fun calculateDistance(item1: StationInfo, item2: StationInfo) {
         calculateDistanceUseCase(item1, item2)
-                    .subscribeBy { view.showDistance(it) }
-                    .addTo(compositeDisposable)
+            .subscribeBy { view.showDistance(it) }
+            .addTo(compositeDisposable)
     }
 
     private fun fetchStations() {
         synchronizeStationsUseCase()
-            .subscribeBy { handleStationsResult(it) }
+            .doOnSubscribe { view.showLoading(true) }
+            .subscribeBy {
+                view.showLoading(false)
+                handleStationsResult(it)
+            }
             .addTo(compositeDisposable)
     }
 
     private fun handleStationsResult(result: ResultWrapper<Boolean>) {
         when (result) {
             is ResultWrapper.Success -> {
-                if (result.data) // successfully synchronized. False would mean up-to-date
+                if (result.data) { // successfully synchronized. False would mean up-to-date
                     view.showMessage(R.string.station_list_synchronized)
+                }
             }
-            is ResultWrapper.Failure -> handleError(result.error)
-            is ResultWrapper.Loading -> view.showLoading()
+            is ResultWrapper.Failure -> {
+                handleError(result.error)
+            }
         }
     }
 

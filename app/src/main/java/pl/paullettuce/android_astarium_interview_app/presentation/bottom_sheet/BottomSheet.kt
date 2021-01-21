@@ -11,11 +11,6 @@ class BottomSheet(view: View, draggable: Boolean = false) {
         hide()
     }
 
-    fun toggle() {
-        if (isHidden()) open()
-        else hide()
-    }
-
     fun open() {
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }

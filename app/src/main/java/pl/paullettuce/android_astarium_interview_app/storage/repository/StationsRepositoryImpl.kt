@@ -37,17 +37,8 @@ class StationsRepositoryImpl(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun downloadStations(): Flowable<ResultWrapper<List<StationDataEntity>>> {
+    override fun downloadStations(): Flowable<List<StationDataEntity>> {
         return apiService.getStations()
-            .doOnSubscribe { Flowable.just(ResultWrapper.loading()) }
-            .map {
-                logd("Stations downloaded successfully.\n", it)
-                ResultWrapper.success(it)
-            }
-            .onErrorReturn {
-                loge(it)
-                ResultWrapper.failure(ErrorParser.parseError(it))
-            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

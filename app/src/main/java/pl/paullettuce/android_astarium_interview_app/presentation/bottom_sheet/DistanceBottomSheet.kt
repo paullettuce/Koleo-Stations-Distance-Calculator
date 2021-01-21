@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
+import pl.paullettuce.android_astarium_interview_app.presentation.extensions.hide
+import pl.paullettuce.android_astarium_interview_app.presentation.extensions.show
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.DeleteFromBottomSheetListener
 
 class DistanceBottomSheet(
@@ -63,13 +65,5 @@ class DistanceBottomSheet(
 
     fun open() {
         bottomSheet.open()
-    }
-
-    private fun View.show() {
-        isVisible = true
-    }
-
-    private fun View.hide() {
-        isVisible = false
     }
 }

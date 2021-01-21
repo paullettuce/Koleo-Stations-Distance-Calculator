@@ -16,12 +16,12 @@
         android:id="@+id/openDistanceSheetFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="normal"
         android:layout_margin="@dimen/fab_margin"
-        app:elevation="16dp"
-        app:layout_anchorGravity="top|end"
-        app:layout_anchor="@id/distanceBottomSheetView"
         android:src="@drawable/ic_distance"
-        app:tint="@color/white" />
-
+        app:elevation="16dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/distanceBottomSheetView"
+        app:layout_anchorGravity="top|end"
+        app:tint="@color/white"
+        android:contentDescription="TODO" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

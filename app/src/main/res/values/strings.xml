@@ -3,4 +3,5 @@
     <string name="station_list_synchronized">Lista stacji zaktualizowana</string>
     <string name="pick_station">Wybierz stację</string>
     <string name="kms">%1$d km</string>
+    <string name="no_connection">Brak połączenia z internetem</string>
 </resources>

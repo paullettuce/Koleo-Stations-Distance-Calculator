@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.distance_bottom_sheet.*
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.presentation.bottom_sheet.DistanceBottomSheet
+import pl.paullettuce.android_astarium_interview_app.presentation.extensions.hide
+import pl.paullettuce.android_astarium_interview_app.presentation.extensions.show
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.RecyclerViewMargin
 import pl.paullettuce.android_astarium_interview_app.presentation.stations_distance.list.StationInfoListAdapter
 import javax.inject.Inject
@@ -74,16 +76,16 @@ class StationsDistanceActivity : AppCompatActivity(),
         this.stationsPickingState = stationsPickingState
     }
 
-    override fun showLoading() {
-        Toast.makeText(this, "Loading data", Toast.LENGTH_SHORT).show()
+    override fun showLoading(show: Boolean) {
+        if (show) {
+            loading.show()
+        } else {
+            loading.hide()
+        }
     }
 
     override fun showNoConnectionError() {
-        Toast.makeText(this, "NO INTERNET", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show()
     }
 
     override fun showMessage(stringRes: Int) {

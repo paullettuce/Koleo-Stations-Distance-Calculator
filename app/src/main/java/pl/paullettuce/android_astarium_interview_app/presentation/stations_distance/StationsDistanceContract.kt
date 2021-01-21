@@ -14,9 +14,8 @@ interface StationsDistanceContract {
         fun twoStationsSelected(station1: StationInfo, station2: StationInfo)
         fun showDistance(distanceValue: Int)
 
-        fun showLoading()
+        fun showLoading(show: Boolean)
         fun showNoConnectionError()
-        fun showMessage(message: String)
         fun showMessage(@StringRes stringRes: Int)
     }
 

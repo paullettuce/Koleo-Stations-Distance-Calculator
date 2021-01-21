@@ -10,7 +10,7 @@ import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataE
 
 interface StationsRepository {
     fun getStations(): LiveData<List<StationInfo>>
-    fun downloadStations(): Flowable<ResultWrapper<List<StationDataEntity>>>
+    fun downloadStations(): Flowable<List<StationDataEntity>>
     fun saveStations(stations: List<StationDataEntity>): Completable
     fun getStation(id: Long): Single<StationDataEntity>
 }

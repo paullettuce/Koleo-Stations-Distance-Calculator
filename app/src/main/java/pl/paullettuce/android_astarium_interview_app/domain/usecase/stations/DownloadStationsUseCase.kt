@@ -6,7 +6,7 @@ import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataEntity
 
 interface DownloadStationsUseCase {
-    operator fun invoke(): Flowable<ResultWrapper<List<StationDataEntity>>>
+    operator fun invoke(): Flowable<List<StationDataEntity>>
 }
 
 class DownloadStationsUseCaseImpl(
