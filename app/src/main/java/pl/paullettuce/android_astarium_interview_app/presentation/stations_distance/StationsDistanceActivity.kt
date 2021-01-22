@@ -132,6 +132,7 @@ class StationsDistanceActivity : AppCompatActivity(),
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText ?: return false
+                stationsInfoRecView.scrollToPosition(0)
                 handleSearchQuery(newText)
                 return true
             }
