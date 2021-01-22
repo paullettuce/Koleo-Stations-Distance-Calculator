@@ -76,4 +76,16 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
+    <ImageButton
+        android:id="@+id/retryButton"
+        android:layout_width="@dimen/retry_icon_size"
+        android:layout_height="@dimen/retry_icon_size"
+        android:src="@drawable/ic_retry"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:tint="@color/royal_blue"
+        android:scaleType="centerCrop"
+        />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

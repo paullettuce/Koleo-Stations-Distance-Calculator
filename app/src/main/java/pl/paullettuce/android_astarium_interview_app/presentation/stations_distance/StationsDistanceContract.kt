@@ -26,6 +26,7 @@ interface StationsDistanceContract {
         fun dispose()
         fun calculateDistance(item1: StationInfo, item2: StationInfo)
         fun filterStationsByQuery(query: String)
+        fun synchronizeData()
     }
 
     interface StationInfoListInteractor {

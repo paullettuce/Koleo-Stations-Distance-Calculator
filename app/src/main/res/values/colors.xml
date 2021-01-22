@@ -13,6 +13,7 @@
     <color name="darker_grey_half_opaq">#802F2F2F</color>
 
     <color name="text_color">#2B2B2B</color>
+    <color name="hint_color">#7E7E7E</color>
     <color name="text_color_opaq_75">#BF2B2B2B</color>
 
     <color name="list_item_stations_info_background">#F1F1F1</color>

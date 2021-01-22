@@ -49,7 +49,7 @@ class StationsDistancePresenter
         _searchQuery.postValue(query)
     }
 
-    private fun synchronizeData() {
+    override fun synchronizeData() {
         synchronizeStationsUseCase()
             .doOnSubscribe { view.showLoading(true) }
             .subscribeBy {

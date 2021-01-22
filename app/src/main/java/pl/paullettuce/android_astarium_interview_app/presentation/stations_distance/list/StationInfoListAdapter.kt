@@ -29,6 +29,8 @@ class StationInfoListAdapter(
         items.addAll(newItems)
         notifyDataSetChanged()
     }
+
+    fun isEmpty() = itemCount == 0
 }
 
 class StationInfoViewHolder(

@@ -45,10 +45,6 @@ class StationsDistanceActivity : AppCompatActivity(),
         presenter.initialize()
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(toolbar)
-    }
-
     override fun onStationInfoListItemClick(item: StationInfo) =
         stationsPickingState.onStationInfoClick(item)
 
@@ -91,6 +87,7 @@ class StationsDistanceActivity : AppCompatActivity(),
     }
 
     override fun showNoConnectionError() {
+        if (stationInfoListAdapter.isEmpty()) retryButton.show()
         Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show()
     }
 
@@ -125,6 +122,10 @@ class StationsDistanceActivity : AppCompatActivity(),
                 openBottomSheet()
             }
         }
+        retryButton.setOnClickListener {
+            it.hide()
+            presenter.synchronizeData()
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -135,7 +136,6 @@ class StationsDistanceActivity : AppCompatActivity(),
                 handleSearchQuery(newText)
                 return true
             }
-
         })
     }
 
@@ -144,14 +144,18 @@ class StationsDistanceActivity : AppCompatActivity(),
         presenter.filterStationsByQuery(query)
     }
 
-    private fun closeBottomSheet() {
-        bottomSheet.hideAndClear()
-        openDistanceSheetFAB.setImageResource(R.drawable.ic_distance)
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
     }
 
     private fun openBottomSheet() {
         bottomSheet.open()
         openDistanceSheetFAB.setImageResource(R.drawable.ic_cancel)
+    }
+
+    private fun closeBottomSheet() {
+        bottomSheet.hideAndClear()
+        openDistanceSheetFAB.setImageResource(R.drawable.ic_distance)
     }
 
     private fun setupRecyclerView() {
