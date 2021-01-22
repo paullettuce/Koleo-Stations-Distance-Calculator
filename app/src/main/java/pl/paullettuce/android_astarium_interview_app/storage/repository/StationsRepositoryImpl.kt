@@ -47,7 +47,7 @@ class StationsRepositoryImpl(
     }
 
     override fun saveStations(stations: List<StationDataEntity>): Completable {
-        return stationDataDao.insert(*stations.toTypedArray())
+        return stationDataDao.insert(stations)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

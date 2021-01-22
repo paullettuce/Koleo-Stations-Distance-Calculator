@@ -154,7 +154,7 @@ class StationsDistanceActivity : AppCompatActivity(),
 //                    stationInfoListAdapter.setItems(it)
 //                })
 //            }
-            presenter.filterStationsByQuery(query)
+        presenter.filterStationsByQuery(query)
 //        }
     }
 

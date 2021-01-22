@@ -4,6 +4,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
 import pl.paullettuce.android_astarium_interview_app.domain.result.ErrorParser
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
@@ -20,7 +22,8 @@ interface SynchronizeStationsUseCase {
 class SynchronizeStationsUseCaseImpl(
     private val synchronizationRepository: SynchronizationInfoRepository,
     private val downloadStationsUseCase: DownloadStationsUseCase,
-    private val saveStationsUseCase: SaveStationsUseCase
+    private val saveStationsUseCase: SaveStationsUseCase,
+    private val addNormalizedNameColumnListMapper: AddNormalizedNameColumnListMapper
 ) : SynchronizeStationsUseCase {
     override fun invoke(): Flowable<ResultWrapper<Boolean>> {
         if (!synchronizationRepository.isSynchronizationNeeded()) {
@@ -28,6 +31,9 @@ class SynchronizeStationsUseCaseImpl(
         }
 
         return downloadStationsUseCase()
+            .map {
+                addNormalizedNameColumnListMapper.map(it)
+            }
             .flatMap {
                 saveStationsUseCase(it)
                     .doOnNext { synchronizationRepository.saveSynchronizationTimestampNow() }
