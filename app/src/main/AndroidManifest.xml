@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidastariuminterviewapp">
-        <activity android:name=".presentation.stations_distance.StationsDistanceActivity">
+        <activity android:name=".presentation.stations_distance.StationsDistanceActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
