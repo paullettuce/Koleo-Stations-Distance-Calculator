@@ -2,6 +2,7 @@ package pl.paullettuce.android_astarium_interview_app.presentation.stations_dist
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataEntity
 
@@ -20,10 +21,11 @@ interface StationsDistanceContract {
     }
 
     interface Presenter {
+        val filteredStationsLiveData: LiveData<List<StationInfo>>
         fun initialize()
         fun dispose()
-        fun stationsInfoObservableData(): LiveData<List<StationInfo>>
         fun calculateDistance(item1: StationInfo, item2: StationInfo)
+        fun filterStationsByQuery(query: String)
     }
 
     interface StationInfoListInteractor {

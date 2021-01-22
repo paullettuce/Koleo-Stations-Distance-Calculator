@@ -3,6 +3,7 @@ package pl.paullettuce.android_astarium_interview_app.presentation.stations_dist
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,11 +37,16 @@ class StationsDistanceActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupViews()
+        setupToolbar()
         setupRecyclerView()
         setListeners()
         observeForData()
 
         presenter.initialize()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
     }
 
     override fun onStationInfoListItemClick(item: StationInfo) =
@@ -101,7 +107,7 @@ class StationsDistanceActivity : AppCompatActivity(),
     }
 
     private fun observeForData() {
-        presenter.stationsInfoObservableData().observe(this, Observer {
+        presenter.filteredStationsLiveData.observe(this, Observer {
             stationInfoListAdapter.setItems(it)
         })
     }
@@ -119,6 +125,37 @@ class StationsDistanceActivity : AppCompatActivity(),
                 openBottomSheet()
             }
         }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText ?: return false
+                handleSearchQuery(newText)
+                return true
+            }
+
+        })
+    }
+
+    private fun handleSearchQuery(query: String) {
+//        if (query.length < 3) {
+//            presenter.filteredStationsLiveData.removeObservers(this)
+//            if (!presenter.allStationsLiveData.hasActiveObservers()) {
+//                presenter.allStationsLiveData.observe(this, Observer {
+//                    stationInfoListAdapter.setItems(it)
+//                })
+//            }
+//        } else {
+//            presenter.allStationsLiveData.removeObservers(this)
+//            if (!presenter.filteredStationsLiveData.hasActiveObservers()) {
+//                presenter.filteredStationsLiveData.observe(this, Observer {
+//                    stationInfoListAdapter.setItems(it)
+//                })
+//            }
+            presenter.filterStationsByQuery(query)
+//        }
     }
 
     private fun closeBottomSheet() {

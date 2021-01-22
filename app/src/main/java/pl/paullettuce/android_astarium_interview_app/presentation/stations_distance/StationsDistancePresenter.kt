@@ -1,38 +1,42 @@
 package pl.paullettuce.android_astarium_interview_app.presentation.stations_distance
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
+import pl.paullettuce.android_astarium_interview_app.domain.extensions.switchMap
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.domain.result.ParsedError
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.CalculateDistanceUseCase
-import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.GetStationsUseCase
+import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.FilterStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCase
 import javax.inject.Inject
 
 class StationsDistancePresenter
 @Inject constructor(
     private val view: StationsDistanceContract.View,
-    private val getStationsUseCase: GetStationsUseCase,
+    private val filterStationsUseCase: FilterStationsUseCase,
     private val synchronizeStationsUseCase: SynchronizeStationsUseCase,
     private val calculateDistanceUseCase: CalculateDistanceUseCase
 ) : StationsDistanceContract.Presenter {
+
     private val compositeDisposable = CompositeDisposable()
+    private val _searchQuery = MutableLiveData<String>("")
+    override val filteredStationsLiveData: LiveData<List<StationInfo>>
+        get() = _searchQuery.switchMap { query ->
+            filterStationsUseCase(query)
+        }
 
     override fun initialize() {
-        fetchStations()
+        synchronizeData()
     }
 
     override fun dispose() {
         compositeDisposable.dispose()
-    }
-
-    override fun stationsInfoObservableData(): LiveData<List<StationInfo>> {
-        return getStationsUseCase()
     }
 
     override fun calculateDistance(item1: StationInfo, item2: StationInfo) {
@@ -41,7 +45,11 @@ class StationsDistancePresenter
             .addTo(compositeDisposable)
     }
 
-    private fun fetchStations() {
+    override fun filterStationsByQuery(query: String) {
+        _searchQuery.postValue(query)
+    }
+
+    private fun synchronizeData() {
         synchronizeStationsUseCase()
             .doOnSubscribe { view.showLoading(true) }
             .subscribeBy {

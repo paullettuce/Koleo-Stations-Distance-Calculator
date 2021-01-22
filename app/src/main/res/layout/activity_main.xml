@@ -8,7 +8,44 @@
     android:clipToPadding="false"
     tools:context=".presentation.stations_distance.StationsDistanceActivity">
 
-    <include layout="@layout/content_main" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_edit_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/list_item_stations_info_background"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/light_grey"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="@string/check_distance"
+            app:titleTextColor="@color/text_color">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconifiedByDefault="false"
+                android:paddingStart="-10dp"
+                app:queryHint="@string/pick_station"
+                />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <include layout="@layout/distance_bottom_sheet" />
 
@@ -22,6 +59,5 @@
         app:fabSize="normal"
         app:layout_anchor="@id/distanceBottomSheetView"
         app:layout_anchorGravity="top|end"
-        app:tint="@color/white"
-        android:contentDescription="TODO" />
+        app:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

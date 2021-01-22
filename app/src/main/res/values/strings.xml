@@ -4,4 +4,6 @@
     <string name="pick_station">Wybierz stację</string>
     <string name="kms">%1$d km</string>
     <string name="no_connection">Brak połączenia z internetem</string>
+    <string name="search_station">Szukaj nazwy stacji</string>
+    <string name="check_distance">Sprawdź dystans</string>
 </resources>

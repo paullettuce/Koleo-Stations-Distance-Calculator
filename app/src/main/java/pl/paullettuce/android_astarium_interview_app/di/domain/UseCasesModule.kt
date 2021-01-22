@@ -10,7 +10,6 @@ import pl.paullettuce.android_astarium_interview_app.domain.repository.Synchroni
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.*
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCaseImpl
-import pl.paullettuce.android_astarium_interview_app.storage.preferences.Preferences
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -46,4 +45,9 @@ object UseCasesModule {
         repository: StationsRepository,
         mapper: StationEntityToPointFMapper
     ): CalculateDistanceUseCase = CalculateDistanceUseCaseImpl(repository, mapper)
+
+    @Provides
+    fun provideSearchStationsUseCase(
+        repository: StationsRepository
+    ): FilterStationsUseCase = FilterStationsUseCaseImpl(repository)
 }

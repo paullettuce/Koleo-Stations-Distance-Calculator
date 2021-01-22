@@ -6,14 +6,10 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import pl.paullettuce.android_astarium_interview_app.domain.extensions.logd
-import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
+import pl.paullettuce.android_astarium_interview_app.domain.extensions.mapNotNull
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoListMapper
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.mapNotNull
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
-import pl.paullettuce.android_astarium_interview_app.domain.result.ErrorParser
-import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
 import pl.paullettuce.android_astarium_interview_app.storage.dao.StationDataDao
 import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataEntity
 import pl.paullettuce.android_astarium_interview_app.storage.network.ApiService
@@ -26,6 +22,13 @@ class StationsRepositoryImpl(
 
     override fun getStations(): LiveData<List<StationInfo>> {
         return stationDataDao.getStationsData()
+            .mapNotNull {
+                stationInfoListMapper.map(it)
+            }
+    }
+
+    override fun filterStations(query: String): LiveData<List<StationInfo>> {
+        return stationDataDao.filterStations(query)
             .mapNotNull {
                 stationInfoListMapper.map(it)
             }
