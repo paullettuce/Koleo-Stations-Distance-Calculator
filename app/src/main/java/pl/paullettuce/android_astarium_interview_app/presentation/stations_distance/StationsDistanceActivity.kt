@@ -132,7 +132,6 @@ class StationsDistanceActivity : AppCompatActivity(),
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText ?: return false
-                stationsInfoRecView.scrollToPosition(0)
                 handleSearchQuery(newText)
                 return true
             }
@@ -141,22 +140,8 @@ class StationsDistanceActivity : AppCompatActivity(),
     }
 
     private fun handleSearchQuery(query: String) {
-//        if (query.length < 3) {
-//            presenter.filteredStationsLiveData.removeObservers(this)
-//            if (!presenter.allStationsLiveData.hasActiveObservers()) {
-//                presenter.allStationsLiveData.observe(this, Observer {
-//                    stationInfoListAdapter.setItems(it)
-//                })
-//            }
-//        } else {
-//            presenter.allStationsLiveData.removeObservers(this)
-//            if (!presenter.filteredStationsLiveData.hasActiveObservers()) {
-//                presenter.filteredStationsLiveData.observe(this, Observer {
-//                    stationInfoListAdapter.setItems(it)
-//                })
-//            }
+        stationsInfoRecView.scrollToPosition(0)
         presenter.filterStationsByQuery(query)
-//        }
     }
 
     private fun closeBottomSheet() {
