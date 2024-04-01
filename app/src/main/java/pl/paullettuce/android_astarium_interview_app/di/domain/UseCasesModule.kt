@@ -3,7 +3,7 @@ package pl.paullettuce.android_astarium_interview_app.di.domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
@@ -11,11 +11,13 @@ import pl.paullettuce.android_astarium_interview_app.domain.repository.Synchroni
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.*
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCase
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize.SynchronizeStationsUseCaseImpl
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object UseCasesModule {
     @Provides
+    @Singleton
     fun provideDownloadStationsUseCase(
         stationsRepository: StationsRepository
     ): DownloadStationsUseCase {
@@ -23,11 +25,13 @@ object UseCasesModule {
     }
 
     @Provides
+    @Singleton
     fun provideSaveStationsUseCase(
         stationsRepository: StationsRepository
     ): SaveStationsUseCase = SaveStationsUseCaseImpl(stationsRepository)
 
     @Provides
+    @Singleton
     fun provideSynchronizeStationsUseCaseImpl(
         synchronizationRepository: SynchronizationInfoRepository,
         downloadStationsUseCase: DownloadStationsUseCase,
@@ -38,12 +42,14 @@ object UseCasesModule {
     )
 
     @Provides
+    @Singleton
     fun provideCalculateDistanceUseCase(
         repository: StationsRepository,
         mapper: StationEntityToPointFMapper
     ): CalculateDistanceUseCase = CalculateDistanceUseCaseImpl(repository, mapper)
 
     @Provides
+    @Singleton
     fun provideSearchStationsUseCase(
         repository: StationsRepository
     ): FilterStationsUseCase = FilterStationsUseCaseImpl(repository)

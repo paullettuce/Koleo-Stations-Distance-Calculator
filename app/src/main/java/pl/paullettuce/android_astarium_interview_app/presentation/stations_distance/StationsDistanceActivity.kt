@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.distance_bottom_sheet.*
 import pl.paullettuce.android_astarium_interview_app.R
+import pl.paullettuce.android_astarium_interview_app.databinding.ActivityMainBinding
 import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.presentation.bottom_sheet.DistanceBottomSheet
 import pl.paullettuce.android_astarium_interview_app.presentation.extensions.hide
@@ -31,12 +30,14 @@ class StationsDistanceActivity : AppCompatActivity(),
     @Inject
     lateinit var stationInfoListAdapter: StationInfoListAdapter
 
+    private lateinit var binding: ActivityMainBinding
+
     private lateinit var stationsPickingState: StationsPickingState
     private lateinit var bottomSheet: DistanceBottomSheet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupViews()
         setupToolbar()
         setupRecyclerView()
@@ -81,16 +82,16 @@ class StationsDistanceActivity : AppCompatActivity(),
         this.stationsPickingState = stationsPickingState
     }
 
-    override fun showLoading(show: Boolean) {
+    override fun showLoading(show: Boolean) = with(binding.loading) {
         if (show) {
-            loading.show()
+            show()
         } else {
-            loading.hide()
+            hide()
         }
     }
 
     override fun showNoConnectionError() {
-        if (stationInfoListAdapter.isEmpty()) retryButton.show()
+        if (stationInfoListAdapter.isEmpty()) binding.retryButton.show()
         Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show()
     }
 
@@ -113,23 +114,23 @@ class StationsDistanceActivity : AppCompatActivity(),
     }
 
     private fun setupViews() {
-        bottomSheet = DistanceBottomSheet(distanceBottomSheetView, this)
+        bottomSheet = DistanceBottomSheet(binding.distanceBottomSheet.distanceBottomSheetView, this)
         stationsPickingState = NoStationSelected(this)
     }
 
     private fun setListeners() {
-        openDistanceSheetFAB.setOnClickListener {
+        binding.openDistanceSheetFAB.setOnClickListener {
             if (bottomSheet.isOpened()) {
                 closeBottomSheet()
             } else {
                 openBottomSheet()
             }
         }
-        retryButton.setOnClickListener {
+        binding.retryButton.setOnClickListener {
             it.hide()
             presenter.synchronizeData()
         }
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -143,28 +144,28 @@ class StationsDistanceActivity : AppCompatActivity(),
     }
 
     private fun handleSearchQuery(query: String) {
-        stationsInfoRecView.scrollToPosition(0)
+        binding.contentMain.stationsInfoRecView.scrollToPosition(0)
         presenter.filterStationsByQuery(query)
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun openBottomSheet() {
         bottomSheet.open()
-        openDistanceSheetFAB.setImageResource(R.drawable.ic_cancel)
+        binding.openDistanceSheetFAB.setImageResource(R.drawable.ic_cancel)
     }
 
     private fun closeBottomSheet() {
         bottomSheet.hideAndClear()
-        openDistanceSheetFAB.setImageResource(R.drawable.ic_distance)
+        binding.openDistanceSheetFAB.setImageResource(R.drawable.ic_distance)
     }
 
-    private fun setupRecyclerView() {
-        stationsInfoRecView.layoutManager = LinearLayoutManager(this)
-        stationsInfoRecView.adapter = stationInfoListAdapter
-        stationsInfoRecView.addItemDecoration(
+    private fun setupRecyclerView() = with(binding.contentMain.stationsInfoRecView) {
+        layoutManager = LinearLayoutManager(this@StationsDistanceActivity)
+        adapter = stationInfoListAdapter
+        addItemDecoration(
             RecyclerViewMargin(verticalMarginDp = R.dimen.recycler_view_item_margin)
         )
     }

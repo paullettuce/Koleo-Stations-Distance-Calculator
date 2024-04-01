@@ -3,15 +3,15 @@ package pl.paullettuce.android_astarium_interview_app.di.domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.*
-import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
-import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.DownloadStationsUseCase
-import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.DownloadStationsUseCaseImpl
-import javax.inject.Singleton
+import dagger.hilt.components.SingletonComponent
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoListMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoMapper
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object DomainModule {
 
     @Provides

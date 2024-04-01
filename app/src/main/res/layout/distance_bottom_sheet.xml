@@ -1,95 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/distanceBottomSheetView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/ultra_light_grey"
-    android:clickable="true"
-    android:clipToPadding="false"
-    android:elevation="8dp"
-    android:focusable="true"
-    android:padding="@dimen/big_padding"
-    app:behavior_hideable="true"
-    android:clipChildren="false"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/station1Name"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/distanceBottomSheetView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:layout_marginTop="@dimen/big_margin"
-        android:hint="@string/pick_station"
-        android:maxLines="1"
+        android:background="@color/ultra_light_grey"
+        android:clickable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="8dp"
+        android:focusable="true"
         android:padding="@dimen/big_padding"
-        android:textAlignment="gravity"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_size_mediumbig"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <TextView
-        android:id="@+id/station2Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_grey"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:hint="@string/pick_station"
-        android:maxLines="1"
-        android:padding="@dimen/big_padding"
-        android:textAlignment="gravity"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_size_mediumbig"
-        app:layout_constraintTop_toBottomOf="@id/station1Name" />
+        <TextView
+            android:id="@+id/station1Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/big_margin"
+            android:background="@color/light_grey"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:hint="@string/pick_station"
+            android:maxLines="1"
+            android:padding="@dimen/big_padding"
+            android:textAlignment="gravity"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_mediumbig"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:maxLines="1"
-        android:padding="@dimen/medium_padding"
-        android:textAlignment="gravity"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/station2Name" />
+        <TextView
+            android:id="@+id/station2Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/light_grey"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:hint="@string/pick_station"
+            android:maxLines="1"
+            android:padding="@dimen/big_padding"
+            android:textAlignment="gravity"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_mediumbig"
+            app:layout_constraintTop_toBottomOf="@id/station1Name" />
 
-    <ImageView
-        android:id="@+id/delete1"
-        android:layout_width="@dimen/delete_icon_size"
-        android:layout_height="@dimen/delete_icon_size"
-        android:layout_margin="10dp"
-        android:cropToPadding="true"
-        android:padding="@dimen/delete_icon_padding"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_trash"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/station1Name"
-        app:layout_constraintEnd_toEndOf="@id/station1Name"
-        app:layout_constraintTop_toTopOf="@id/station1Name"
-        app:tint="@color/darker_grey" />
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:maxLines="1"
+            android:padding="@dimen/medium_padding"
+            android:textAlignment="gravity"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/station2Name" />
 
-    <ImageView
-        android:id="@+id/delete2"
-        android:layout_width="@dimen/delete_icon_size"
-        android:layout_height="@dimen/delete_icon_size"
-        android:layout_margin="10dp"
-        android:cropToPadding="true"
-        android:padding="@dimen/delete_icon_padding"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_trash"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/station2Name"
-        app:layout_constraintEnd_toEndOf="@id/station2Name"
-        app:layout_constraintTop_toTopOf="@id/station2Name"
-        app:tint="@color/darker_grey" />
+        <ImageView
+            android:id="@+id/delete1"
+            android:layout_width="@dimen/delete_icon_size"
+            android:layout_height="@dimen/delete_icon_size"
+            android:layout_margin="10dp"
+            android:cropToPadding="true"
+            android:padding="@dimen/delete_icon_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_trash"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/station1Name"
+            app:layout_constraintEnd_toEndOf="@id/station1Name"
+            app:layout_constraintTop_toTopOf="@id/station1Name"
+            app:tint="@color/darker_grey" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/delete2"
+            android:layout_width="@dimen/delete_icon_size"
+            android:layout_height="@dimen/delete_icon_size"
+            android:layout_margin="10dp"
+            android:cropToPadding="true"
+            android:padding="@dimen/delete_icon_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_trash"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/station2Name"
+            app:layout_constraintEnd_toEndOf="@id/station2Name"
+            app:layout_constraintTop_toTopOf="@id/station2Name"
+            app:tint="@color/darker_grey" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Androidastariuminterviewapp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -10,14 +10,15 @@
         <item name="colorSecondaryVariant">@color/fountain_blue_dark</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:editTextColor">@color/text_color</item>
         <item name="android:textColorHint">@color/hint_color</item>
     </style>
-    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView" >
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:colorControlActivated">@color/fountain_blue</item>
         <item name="queryBackground">@null</item>
         <item name="submitBackground">@null</item>

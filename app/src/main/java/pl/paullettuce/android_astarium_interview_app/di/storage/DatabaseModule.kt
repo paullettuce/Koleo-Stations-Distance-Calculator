@@ -6,15 +6,14 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.storage.dao.StationDataDao
 import pl.paullettuce.android_astarium_interview_app.storage.database.AppDatabase
-import pl.paullettuce.android_astarium_interview_app.storage.preferences.Preferences
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
     @Provides

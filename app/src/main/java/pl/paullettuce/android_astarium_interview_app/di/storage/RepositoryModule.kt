@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoListMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
@@ -15,7 +15,7 @@ import pl.paullettuce.android_astarium_interview_app.storage.repository.Synchron
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides

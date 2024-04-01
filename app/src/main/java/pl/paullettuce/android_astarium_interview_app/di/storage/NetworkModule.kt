@@ -3,7 +3,7 @@ package pl.paullettuce.android_astarium_interview_app.di.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import pl.paullettuce.android_astarium_interview_app.storage.network.ApiService
 import pl.paullettuce.android_astarium_interview_app.storage.network.constants.API_URL
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
