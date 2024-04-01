@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnMapper
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoListMapper
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToStationInfoMapper
 
@@ -23,7 +23,7 @@ object DomainModule {
     ) = StationEntityToStationInfoListMapper(itemMapper)
 
     @Provides
-    fun provideStationEntityToPointF() = StationEntityToPointFMapper()
+    fun provideStationEntityToPoint() = StationEntityToPointMapper()
 
     @Provides
     fun provideAddNormalizedNameColumnMapper() = AddNormalizedNameColumnMapper()

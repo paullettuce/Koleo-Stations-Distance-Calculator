@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointFMapper
+import pl.paullettuce.android_astarium_interview_app.domain.mappers.StationEntityToPointMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.StationsRepository
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
 import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.*
@@ -45,7 +45,7 @@ object UseCasesModule {
     @Singleton
     fun provideCalculateDistanceUseCase(
         repository: StationsRepository,
-        mapper: StationEntityToPointFMapper
+        mapper: StationEntityToPointMapper
     ): CalculateDistanceUseCase = CalculateDistanceUseCaseImpl(repository, mapper)
 
     @Provides
