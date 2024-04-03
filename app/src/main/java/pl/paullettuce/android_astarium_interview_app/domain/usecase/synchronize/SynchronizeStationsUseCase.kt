@@ -1,43 +1,35 @@
 package pl.paullettuce.android_astarium_interview_app.domain.usecase.synchronize
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnListMapper
-import pl.paullettuce.android_astarium_interview_app.domain.mappers.AddNormalizedNameColumnMapper
 import pl.paullettuce.android_astarium_interview_app.domain.repository.SynchronizationInfoRepository
 import pl.paullettuce.android_astarium_interview_app.domain.result.ErrorParser
 import pl.paullettuce.android_astarium_interview_app.domain.result.ResultWrapper
-import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.DownloadStationsUseCase
-import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.SaveStationsUseCase
+import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations.DownloadAndSaveStationsUseCase
+import pl.paullettuce.android_astarium_interview_app.domain.usecase.stations_keywords.DownloadAndSaveStationsKeywordsUseCase
 
 interface SynchronizeStationsUseCase {
     /**
      * ResultWrapper.Success.data: true if successfully synchronized, false if was already up to date
      */
-    operator fun invoke(): Flowable<ResultWrapper<Boolean>>
+    operator fun invoke(): Single<ResultWrapper<Boolean>>
 }
 
 class SynchronizeStationsUseCaseImpl(
     private val synchronizationRepository: SynchronizationInfoRepository,
-    private val downloadStationsUseCase: DownloadStationsUseCase,
-    private val saveStationsUseCase: SaveStationsUseCase,
-    private val addNormalizedNameColumnListMapper: AddNormalizedNameColumnListMapper
+    private val downloadAndSaveStationsUseCase: DownloadAndSaveStationsUseCase,
+    private val downloadAndSaveStationsKeywordsUseCase: DownloadAndSaveStationsKeywordsUseCase,
 ) : SynchronizeStationsUseCase {
-    override fun invoke(): Flowable<ResultWrapper<Boolean>> {
+    override fun invoke(): Single<ResultWrapper<Boolean>> {
         if (!synchronizationRepository.isSynchronizationNeeded()) {
-            return Flowable.just(ResultWrapper.success(false))
+            return Single.just(ResultWrapper.success(false))
         }
 
-        return downloadStationsUseCase()
-            .map {
-                addNormalizedNameColumnListMapper.map(it)
-            }
-            .flatMap {
-                saveStationsUseCase(it)
-                    .doOnNext { synchronizationRepository.saveSynchronizationTimestampNow() }
-            }
+        return downloadAndSaveStationsUseCase()
+            .flatMap { downloadAndSaveStationsKeywordsUseCase() }
+            .doOnSuccess { synchronizationRepository.saveSynchronizationTimestampNow() }
             .onErrorReturn {
                 loge(it)
                 ResultWrapper.failure(ErrorParser.parseError(it))

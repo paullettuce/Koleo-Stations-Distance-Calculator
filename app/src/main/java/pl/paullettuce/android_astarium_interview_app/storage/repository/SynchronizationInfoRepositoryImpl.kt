@@ -6,7 +6,7 @@ import pl.paullettuce.android_astarium_interview_app.domain.repository.Synchroni
 
 class SynchronizationInfoRepositoryImpl(
     private val sharedPreferences: SharedPreferences
-): SynchronizationInfoRepository {
+) : SynchronizationInfoRepository {
     private val KEY_LAST_SYNCH_TIMESTAMP = "last_synchronization_timestamp"
     private val CACHE_VALIDITY_AGE = 24 * 60 * 60 * 1000
 
@@ -15,6 +15,7 @@ class SynchronizationInfoRepositoryImpl(
     }
 
     override fun isSynchronizationNeeded(): Boolean {
+        return true
         val lastSynchronizationTimestamp = getLastSynchronizationTimestamp()
         if (lastSynchronizationTimestamp <= 0) return true
         return now() - lastSynchronizationTimestamp >= CACHE_VALIDITY_AGE

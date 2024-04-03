@@ -2,9 +2,11 @@ package pl.paullettuce.android_astarium_interview_app.presentation.stations_dist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 import pl.paullettuce.android_astarium_interview_app.R
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.loge
 import pl.paullettuce.android_astarium_interview_app.domain.extensions.switchMap
@@ -52,6 +54,8 @@ class StationsDistancePresenter
     override fun synchronizeData() {
         synchronizeStationsUseCase()
             .doOnSubscribe { view.showLoading(true) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
                 view.showLoading(false)
                 handleStationsResult(it)
@@ -66,6 +70,7 @@ class StationsDistancePresenter
                     view.showMessage(R.string.station_list_synchronized)
                 }
             }
+
             is ResultWrapper.Failure -> {
                 handleError(result.error)
             }

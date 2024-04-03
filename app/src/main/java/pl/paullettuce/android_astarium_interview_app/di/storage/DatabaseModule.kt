@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pl.paullettuce.android_astarium_interview_app.storage.dao.StationDataDao
+import pl.paullettuce.android_astarium_interview_app.storage.dao.StationKeywordsDao
 import pl.paullettuce.android_astarium_interview_app.storage.database.AppDatabase
 import javax.inject.Singleton
 
@@ -44,4 +45,10 @@ object DatabaseModule {
     fun provideStationDataDao(
         appDatabase: AppDatabase
     ): StationDataDao = appDatabase.stationDataDao()
+
+    @Provides
+    @Singleton
+    fun provideStationsKeywordsDao(
+        appDatabase: AppDatabase
+    ): StationKeywordsDao = appDatabase.stationKeywordsDao()
 }

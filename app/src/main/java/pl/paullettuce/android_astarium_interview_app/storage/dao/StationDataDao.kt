@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import pl.paullettuce.android_astarium_interview_app.domain.model.StationInfo
 import pl.paullettuce.android_astarium_interview_app.storage.entity.StationDataEntity
 
 @Dao
@@ -18,9 +17,13 @@ interface StationDataDao {
 
     @Query(
         """
-            SELECT * FROM station_data_entity 
-            WHERE normalized_name LIKE :query OR name LIKE :query
-            ORDER BY hits DESC
+        SELECT station_data_entity.*
+        FROM station_data_entity
+        LEFT JOIN station_keyword_entity ON station_data_entity.id = station_keyword_entity.stationId
+        WHERE station_keyword_entity.keyword LIKE :query
+        OR name LIKE :query
+        OR normalized_name LIKE :query
+        ORDER BY hits DESC
         """
     )
     fun filterStations(query: String): LiveData<List<StationDataEntity>>

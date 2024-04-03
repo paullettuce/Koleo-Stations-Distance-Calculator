@@ -14,6 +14,7 @@ class CalculateDistanceUseCaseImpl(
     private val stationsRepository: StationsRepository,
     private val mapper: StationEntityToPointMapper
 ) : CalculateDistanceUseCase {
+    
     override fun invoke(station1: StationInfo, station2: StationInfo): Single<Int> {
         return Single.zip(
             stationsRepository.getStation(station1.id).map { mapper.map(it) },
